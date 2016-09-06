@@ -6,20 +6,51 @@
 [![Dependency Status][depstat-image]][depstat-url]
 [![Downloads][download-badge]][npm-url]
 
-> Body parser middleware for MongoDB, Express and Nodejs
+**Bodymen** works similarly to [Querymen](https://github.com/diegohaz/querymen) and has almost the same functionality, expect it formats, validates and parses request body instead of querystrings. Refer to [Querymen](https://github.com/diegohaz/querymen)'s readme to find out more.
+
+## Prerequisites
+
+You must use a request body parser like express [body-parser](https://github.com/expressjs/body-parser) and set it up before using bodymen:
+```js
+import express from 'express'
+import bodyParser from 'body-parser'
+
+const app = express()
+
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+```
 
 ## Install
 
 ```sh
-npm i -D bodymen
+npm install --save bodymen
 ```
 
 ## Usage
 
+Bodymen allows you to define a schema to control the fields sent through the request body.
 ```js
-import bodymen from "bodymen"
+import bodymen, { errorHandler } from "bodymen"
 
-bodymen() // true
+app.post('/posts', bodymen.middleware({
+  title: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 3
+  },
+  content: {
+    type: String,
+    required: true,
+    minlength: 32
+  },
+  tags: [String]
+}), (req, res) => {
+  console.log(req.bodymen.body) // will contain the parsed body
+})
+
+app.use(errorHandler()) // will send standard error messages, similar to Querymen
 ```
 
 ## License
