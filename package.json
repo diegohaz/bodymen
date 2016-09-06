@@ -1,6 +1,6 @@
 {
   "name": "bodymen",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Body parser middleware for MongoDB, Express and Nodejs",
   "main": "dist/index.js",
   "files": [
