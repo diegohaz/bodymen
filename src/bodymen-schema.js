@@ -21,7 +21,7 @@ export default class BodymenSchema {
     }
 
     _.forIn(params, (options, key) => {
-      this.add(key, null, options)
+      this.add(key, undefined, options)
     })
 
     _.forIn(bodymen.handlers, (typedHandler, type) => {
