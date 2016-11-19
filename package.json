@@ -73,6 +73,6 @@
   },
   "dependencies": {
     "lodash": "^4.15.0",
-    "rich-param": "^1.0.1"
+    "rich-param": "^1.0.5"
   }
 }
