@@ -40,7 +40,7 @@ test('Bodymen handler', (t) => {
 })
 
 test('Bodymen middleware', (t) => {
-  t.plan(4)
+  t.plan(5)
 
   request(route())
     .post('/tests')
@@ -85,5 +85,15 @@ test('Bodymen middleware', (t) => {
     .end((err, res) => {
       if (err) throw err
       t.same(res.body.param, 'name', 'should respond with error object')
+    })
+
+  // issue #1
+  request(route(new Schema({links: [Object]})))
+    .post('/tests')
+    .send({links: [{icon: 'path to icon'}]})
+    .expect(200)
+    .end((err, res) => {
+      if (err) throw err
+      t.same(res.body, {links: [{icon: 'path to icon'}]}, 'should respond with correct object')
     })
 })
