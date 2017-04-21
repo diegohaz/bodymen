@@ -40,7 +40,7 @@ test('Bodymen handler', (t) => {
 })
 
 test('Bodymen middleware', (t) => {
-  t.plan(5)
+  t.plan(7)
 
   request(route())
     .post('/tests')
@@ -89,6 +89,25 @@ test('Bodymen middleware', (t) => {
 
   // issue #1
   request(route(new Schema({links: [Object]})))
+    .post('/tests')
+    .send({links: [{icon: 'path to icon'}]})
+    .expect(200)
+    .end((err, res) => {
+      if (err) throw err
+      t.same(res.body, {links: [{icon: 'path to icon'}]}, 'should respond with correct object')
+    })
+
+  // parse subdocuments as Object
+  request(route(new Schema({sub: {name: String}})))
+    .post('/tests')
+    .send({sub: {name: 'test'}})
+    .expect(200)
+    .end((err, res) => {
+      if (err) throw err
+      t.same(res.body, {sub: {name: 'test'}}, 'should respond with correct object')
+    })
+
+  request(route(new Schema({links: [{icon: String}]})))
     .post('/tests')
     .send({links: [{icon: 'path to icon'}]})
     .expect(200)

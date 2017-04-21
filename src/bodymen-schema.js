@@ -255,6 +255,10 @@ export default class BodymenSchema {
       options = {type: RegExp, default: options}
     } else if (_.isFunction(options)) {
       options = {type: options}
+    } else if (_.isObject(options)) {
+      if (!_.isFunction(options.type)) {
+        options.type = Object
+      }
     }
 
     return options || {}
