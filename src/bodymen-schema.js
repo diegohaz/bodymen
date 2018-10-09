@@ -171,7 +171,7 @@ export default class BodymenSchema {
     _.forIn(this.params, (param) => {
       let value = values[this._getBodyParamName(param.name)]
 
-      if (!_.isNull(value)) {
+      if (!_.isNil(value)) {
         param.value(value)
       }
     })
@@ -201,7 +201,7 @@ export default class BodymenSchema {
     _.forIn(this.params, (param) => {
       const value = values[this._getBodyParamName(param.name)]
 
-      if (!_.isNull(value)) {
+      if (!_.isNil(value)) {
         param.value(value)
       }
     })
