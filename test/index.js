@@ -11,6 +11,8 @@ let route = (...args) => {
   app.use(bodyParser.urlencoded({ extended: true }))
 
   app.post('/tests', bodymen.middleware(...args), (req, res) => {
+    console.log(req.body)
+    console.log(req.bodymen)
     res.status(200).json(req.bodymen.body)
   })
 
