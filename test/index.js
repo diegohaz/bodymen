@@ -116,3 +116,18 @@ test('Bodymen middleware', (t) => {
       t.same(res.body, {links: [{icon: 'path to icon'}]}, 'should respond with correct object')
     })
 })
+
+test('Prototype pollution', (t) => {
+  const { toString } = {}
+
+  bodymen.handler('__proto__', 'toString', 'JHU')
+  t.ok({}.toString === toString, 'should not be vulnerable to prototype pollution')
+
+  bodymen.handler('formatters', '__proto__', { toString: 'JHU' })
+  t.ok({}.toString === toString, 'should not be vulnerable to prototype pollution')
+
+  bodymen.handler('validators', '__proto__', { toString: 'JHU' })
+  t.ok({}.toString === toString, 'should not be vulnerable to prototype pollution')
+
+  t.end()
+})
