@@ -18,6 +18,14 @@ export const handlers = {
  * @param {Function} [fn] - Set the handler method.
  */
 export function handler (type, name, fn) {
+  if (
+    type === 'constructor' ||
+    type === '__proto__' ||
+    name === 'constructor' ||
+    name === '__proto__'
+  ) {
+    return
+  }
   if (arguments.length > 2) {
     handlers[type][name] = fn
   }
